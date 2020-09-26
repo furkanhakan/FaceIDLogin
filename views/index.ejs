@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title> <%- title %> </title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container" id="appContainer">
+        <div class="video-container" id="videoContainer">
+            <video id="video" width="400" height="300" autoplay muted></video>
+            <span id="faceIDResult"></span>
+        </div>
+        <!-- Login Container -->
+        <div class="login-container face-id-active" id="loginContainer">
+            <div class="button-container w-100">
+                <a href="/new_face" style="width: 100%;">
+                    <button id="loginButton" style="width: 100%;">
+                        <i class="fa fa-smile-beam"></i>
+                        <span>Yeni Yüz Ekle</span>
+                    </button>
+                </a>
+            </div>
+            <div class="button-container w-100">
+                <a href="/login_step1" style="width: 100%;">
+                    <button id="loginButton" style="width: 100%;">
+                        <i class="fa fa-sign-in-alt"></i>
+                        <span>Giriş Yap</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="footer">
+            <span>FaceID ile Oturum Kontrolü</span>
+        </div>
+    </div>
+</body>
+
+</html>
