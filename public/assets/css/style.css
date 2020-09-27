@@ -13,7 +13,8 @@
   transition: all 1s;
 }
 
-.container .login-container {
+.container .login-container,
+.container .index-container {
   padding: 10px 40px;
   border-radius: 10px;
   width: 500px;

@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-let username = ""
 
 // redis
 const redis = require("redis");
@@ -29,10 +28,9 @@ router.get('/login_step1', (req, res) => {
 })
 
 router.post('/login_step2', (req, res) => {
-    username = req.body.username
     res.render('login_step2.ejs', {
-        'title' : 'FaceID ile Oturum Kontrolü',
-        'username' : req.body.username
+        'title': 'FaceID ile Oturum Kontrolü',
+        'username': req.body.username
     })
 })
 
@@ -40,8 +38,8 @@ router.get('/success', (req, res) => {
     res.end('Giris Basarili :)')
 })
 
-router.post('/postImages', (req, res) => {
-    client.set(username, req.body.data, (error, message) => {
+router.post('/addFace', (req, res) => {
+    client.set(req.body.label, req.body.data, (error, message) => {
         if (error) {
             console.error(error);
         }
@@ -50,8 +48,8 @@ router.post('/postImages', (req, res) => {
     return res.sendStatus(200);
 })
 
-router.post('/getImages', (req, res) => {
-    client.get(username, (error, message) => {
+router.post('/getFace', (req, res) => {
+    client.get(req.body.label, (error, message) => {
         if (error) {
             console.error(error);
         }

@@ -7,6 +7,7 @@ let faceIDResult = document.getElementById("faceIDResult");
 let usernameInput = document.getElementById("username");
 
 let isFaceIDActive = false;
+let isFaceExist = false;
 faceIdButton.style.display = "none";
 
 const video = document.getElementById("video");
@@ -23,19 +24,17 @@ Promise.all([
 
 async function initApp() {
   LabeledFaceDescriptors = await loadImages()
-
-  faceIdButton.style.display = "block";
+  if (isFaceExist)
+    faceIdButton.style.display = "block";
 }
 
 function loadImages() {
   const label = [usernameInput.value]
-  let next = true
   let array = [];
   return Promise.all(
-
     label.map(async label => {
       $.ajax({
-        url: '/getImages',
+        url: '/getFace',
         type: 'post',
         dataType: 'json',
         async: false,
@@ -43,7 +42,7 @@ function loadImages() {
           label: label
         },
         success: function (data) {
-          next = data.length > 0 ? false : true;
+          isFaceExist = data.length > 0 ? true : false;
 
           Object.keys(data).forEach(function (k) {
             array[k] = new Float32Array(128);
@@ -51,45 +50,11 @@ function loadImages() {
               array[k][i] = data[k][i];
             });
           });
-        },
-        error: function (error) {
-          console.log(error);
         }
       })
-      if (!next) {
+      if (isFaceExist) {
         return new faceapi.LabeledFaceDescriptors(label, array);
       }
-
-      const descriptions = [];
-      for (let i = 1; i <= 3; i++) {
-        const img = await faceapi.fetchImage(
-          `/images/${label}/${i}.jpg`
-        );
-
-        const detections = await faceapi
-          .detectSingleFace(img)
-          .withFaceLandmarks()
-          .withFaceDescriptor();
-        descriptions.push(detections.descriptor);
-      }
-
-      $.ajax({
-        url: '/postImages',
-        type: 'post',
-        dataType: 'json',
-        data: {
-          label: label,
-          data: JSON.stringify(descriptions)
-        },
-        success: function (data) {
-          //console.log(data);
-        },
-        error: function (error) {
-          //console.log(error);
-        }
-
-      })
-      return new faceapi.LabeledFaceDescriptors(label, descriptions);
     })
   );
 }
@@ -162,7 +127,6 @@ video.addEventListener("play", async () => {
     const results = resizedDetections.map(d =>
       faceMatcher.findBestMatch(d.descriptor)
     );
-    console.log(results)
     if (
       results.length > 0 &&
       results[0].label === usernameInput.value
