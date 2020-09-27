@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+// const fs = require('fs');
 
 // redis
 const redis = require("redis");
@@ -44,11 +45,14 @@ router.post('/addFace', (req, res) => {
             console.error(error);
         }
     })
-    // fs.writeFileSync(req.body.label + ".json", req.body.data); => dosya olarak kaydet
+    // fs.writeFileSync(req.body.label + ".json", req.body.data); // => store as file
     return res.sendStatus(200);
 })
 
 router.post('/getFace', (req, res) => {
+    /* try {
+        return res.end(fs.readFileSync(req.body.label + ".json", "utf8"));
+    } catch(err) {return res.end()} */ // => store as file
     client.get(req.body.label, (error, message) => {
         if (error) {
             console.error(error);
