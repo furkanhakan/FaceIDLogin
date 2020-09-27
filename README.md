@@ -1,9 +1,9 @@
 # FaceIDLogin
-<center>
+<div align="center">
     <img src="https://img.shields.io/github/followers/furkanhakan?style=social&label=Follow&maxAge=2592000" />
     <img src="https://img.shields.io/github/stars/furkanhakan/FaceIDLogin?style=social&label=Star&maxAge=2592000" />
     <img src="https://img.shields.io/github/forks/furkanhakan/FaceIDLogin?style=social&label=Fork&maxAge=2592000" />
-</center>
+</div>
 
 ## Usage
 
